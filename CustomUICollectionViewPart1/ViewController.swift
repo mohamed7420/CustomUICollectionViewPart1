@@ -8,13 +8,46 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController  {
 
+    
+    
+    @IBOutlet weak var collectionView: UICollectionView!
+  
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+       
+        self.collectionView.delegate = self
+        
+        self.collectionView.dataSource = self
+        
+     
+        
     }
 
 
 }
 
+
+extension ViewController : UICollectionViewDataSource , UICollectionViewDelegate{
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+        return PhotoLibrary.Images().count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as? CollectionViewCell
+    
+        
+        
+        cell?.imageView.image = PhotoLibrary.Images()[indexPath.row]
+       
+        return cell!
+    
+    }
+    
+    
+}
